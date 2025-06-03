@@ -2,3 +2,10 @@
 .ruff_cache
 __pycache__
 .pytest_cache
+
+# Environment configuration (contains sensitive API keys)
+.env
+
+# Development files
+*.log
+.DS_Store
