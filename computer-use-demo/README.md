@@ -165,6 +165,89 @@ When implementing computer use yourself, we recommend using XGA resolution (1024
 
 ## Development
 
+### Quick Start with Makefile (Recommended)
+
+We've provided a comprehensive Makefile for streamlined development with auto-sync and restart capabilities:
+
+```bash
+# Initial setup - creates .env file and runs setup.sh
+make setup
+
+# Edit .env file with your API key
+# ANTHROPIC_API_KEY=your_actual_api_key_here
+
+# Start development environment with auto-sync
+make dev
+```
+
+That's it! The development environment will start with:
+- **Auto-sync**: Local `computer_use_demo/` directory mounted for live editing
+- **Auto-reload**: Streamlit automatically reloads when you change Python files
+- **Easy access**: All ports exposed and documented
+
+#### Available Make Commands
+
+**Setup & Development:**
+- `make setup` - Configure venv, install dependencies, and create .env file
+- `make dev` - Start development environment with auto-sync
+- `make build` - Build Docker image locally
+
+**Management:**
+- `make stop` - Stop the development container
+- `make restart` - Restart the development container
+- `make logs` - Follow container logs in real-time
+- `make shell` - Get shell access to running container
+
+**Cleanup:**
+- `make clean` - Stop container and remove local image
+- `make clean-all` - Deep clean with confirmation (removes everything)
+
+**Utilities:**
+- `make status` - Show container and image status
+- `make config` - Show current configuration
+- `make help` - Show all available commands
+
+#### Configuration
+
+The Makefile uses a `.env` file for configuration. After running `make setup`, edit the `.env` file:
+
+```bash
+# Required: Add your API key
+ANTHROPIC_API_KEY=your_actual_api_key_here
+
+# Optional: Configure API provider (default: anthropic)
+API_PROVIDER=anthropic
+
+# Optional: Set screen resolution (default: 1024x768)
+WIDTH=1024
+HEIGHT=768
+```
+
+The `.env` file supports all API providers:
+- **Anthropic API**: Set `ANTHROPIC_API_KEY`
+- **AWS Bedrock**: Set `API_PROVIDER=bedrock` and AWS credentials
+- **Google Vertex**: Set `API_PROVIDER=vertex` and GCP credentials
+
+#### Access Points
+
+Once `make dev` is running:
+- **Combined interface**: [http://localhost:8080](http://localhost:8080)
+- **Streamlit only**: [http://localhost:8501](http://localhost:8501)
+- **Desktop view**: [http://localhost:6080/vnc.html](http://localhost:6080/vnc.html)
+- **VNC direct**: `vnc://localhost:5900`
+
+#### Development Workflow
+
+1. **Start development**: `make dev`
+2. **Edit code**: Changes to `computer_use_demo/` are automatically synced
+3. **View logs**: `make logs` (in another terminal)
+4. **Restart if needed**: `make restart`
+5. **Clean up**: `make clean` when done
+
+### Manual Development (Alternative)
+
+If you prefer manual Docker commands:
+
 ```bash
 ./setup.sh  # configure venv, install development dependencies, and install pre-commit hooks
 docker build . -t computer-use-demo:local  # manually build the docker image (optional)
